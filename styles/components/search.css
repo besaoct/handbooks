@@ -51,7 +51,7 @@
 }
 
 .search-input:hover {
-  border-color: var(--color-border-hover);
+  border-color: transparent;
 }
 
 .search-input:focus,
@@ -62,7 +62,7 @@
   outline-width: 0 !important;
   box-shadow: none !important;
   -webkit-box-shadow: none !important;
-  border-color: var(--color-border-hover) !important;
+  border-color: transparent !important;
 }
 
 .search-kbd-hint {
@@ -116,7 +116,7 @@
 .filter-btn:hover {
   background-color: var(--color-surface-hover);
   color: var(--color-ink);
-  border-color: var(--color-border-hover);
+  border-color: transparent;
 }
 
 .filter-btn.active {

@@ -22,10 +22,10 @@
   --color-ink-muted: #647063;
   --color-ink-subtle: #8A9789;
 
-  /* Structural Borders & Rules (Soft, 0.08 opacity) */
+  /* Structural Borders & Rules (Soft, almost transparent) */
   --color-border: rgba(0, 0, 0, 0.08);
   --color-border-subtle: rgba(0, 0, 0, 0.04);
-  --color-border-hover: rgba(0, 0, 0, 0.16);
+  --color-border-hover: transparent;
 
   /* Brand & Accents (Workshop Forest Green) */
   --color-primary: #1E663B;
@@ -69,10 +69,10 @@
     --color-ink-muted: #80907F;
     --color-ink-subtle: #5B6A5A;
 
-    /* Structural Borders & Rules (Soft, 0.08 opacity) */
+    /* Structural Borders & Rules (Soft, almost transparent) */
     --color-border: rgba(255, 255, 255, 0.08);
     --color-border-subtle: rgba(255, 255, 255, 0.04);
-    --color-border-hover: rgba(255, 255, 255, 0.16);
+    --color-border-hover: transparent;
 
     /* Brand & Accents */
     --color-primary: #52B877;
@@ -118,7 +118,7 @@
   /* Structural Borders & Rules */
   --color-border: rgba(255, 255, 255, 0.08);
   --color-border-subtle: rgba(255, 255, 255, 0.04);
-  --color-border-hover: rgba(255, 255, 255, 0.16);
+  --color-border-hover: transparent;
 
   --color-primary: #52B877;
   --color-primary-hover: #67C78A;

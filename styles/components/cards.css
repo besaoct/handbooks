@@ -23,7 +23,7 @@
 
 .handbook-card:hover {
   background-color: var(--color-surface-hover);
-  border-color: var(--color-border-hover);
+  border-color: transparent;
   box-shadow: var(--shadow-card-hover);
   transform: translateY(-2px);
 }
