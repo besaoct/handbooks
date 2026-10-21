@@ -1,66 +1,75 @@
 /**
  * Theme & Color Tokens
  * Supports light and dark modes with intentional, calm palette.
- * Borders configured close to transparent for a soft, refined aesthetic.
+ * Ensures container elements (cards, buttons, inputs, badges) have
+ * distinct, visible surface contrast against the main page background.
  */
 
 :root,
 [data-theme="light"] {
-  /* Canvas & Surfaces */
-  --color-bg: #F4F6F3;
+  /* Canvas & Main Page Background */
+  --color-bg: #ECEFEA;
+
+  /* Container Surfaces (Clearly visible against --color-bg) */
   --color-surface: #FFFFFF;
-  --color-surface-secondary: #EBEFEA;
-  --color-surface-tertiary: #E1E7E0;
+  --color-surface-secondary: #DEE5DD;
+  --color-surface-tertiary: #D2DAD0;
   --color-surface-hover: #F8FAF7;
 
   /* Typography Colors */
-  --color-ink: #131814;
-  --color-ink-secondary: #424D41;
-  --color-ink-muted: #6B776A;
-  --color-ink-subtle: #929E91;
+  --color-ink: #121813;
+  --color-ink-secondary: #3D473C;
+  --color-ink-muted: #647063;
+  --color-ink-subtle: #8A9789;
 
-  /* Structural Borders & Rules (Close to transparent) */
+  /* Structural Borders & Rules (Soft, 0.08 opacity) */
   --color-border: rgba(0, 0, 0, 0.08);
   --color-border-subtle: rgba(0, 0, 0, 0.04);
-  --color-border-hover: rgba(0, 0, 0, 0.15);
+  --color-border-hover: rgba(0, 0, 0, 0.16);
 
   /* Brand & Accents (Workshop Forest Green) */
-  --color-primary: #21663D;
-  --color-primary-hover: #195230;
+  --color-primary: #1E663B;
+  --color-primary-hover: #16502E;
   --color-primary-contrast: #FFFFFF;
-  --color-primary-subtle: #E3EFE7;
-  --color-primary-border: rgba(33, 102, 61, 0.12);
+
+  /* Badge Background & Border (Crisp & Distinct) */
+  --color-primary-subtle: #D8ECDD;
+  --color-primary-border: rgba(30, 102, 59, 0.18);
 
   /* Secondary Accent (Technical Slate) */
   --color-accent-blue: #2B577E;
-  --color-accent-blue-subtle: #E3ECF4;
+  --color-accent-blue-subtle: #E1EAF2;
 
   /* Interactive States */
-  --color-focus: #21663D;
+  --color-focus: #1E663B;
   --color-focus-ring: transparent;
 
-  /* Shadows (Subtle, structural) */
-  --shadow-sm: 0 1px 2px rgba(19, 24, 20, 0.04);
-  --shadow-md: 0 3px 8px -1px rgba(19, 24, 20, 0.06);
-  --shadow-lg: 0 8px 18px -3px rgba(19, 24, 20, 0.09);
+  /* Elevation Shadows (Provides physical edge separation) */
+  --shadow-sm: 0 1px 2px rgba(18, 28, 20, 0.04);
+  --shadow-card: 0 1px 3px rgba(18, 28, 20, 0.05), 0 4px 12px rgba(18, 28, 20, 0.03);
+  --shadow-card-hover: 0 4px 16px rgba(18, 28, 20, 0.08);
+  --shadow-md: 0 3px 8px -1px rgba(18, 28, 20, 0.06);
+  --shadow-lg: 0 8px 18px -3px rgba(18, 28, 20, 0.09);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    /* Canvas & Surfaces */
-    --color-bg: #0C100D;
-    --color-surface: #141A15;
-    --color-surface-secondary: #1B221C;
-    --color-surface-tertiary: #232C24;
-    --color-surface-hover: #182019;
+    /* Canvas & Main Page Background (Deep foundation) */
+    --color-bg: #0A0E0C;
+
+    /* Container Surfaces (Distinctly visible against --color-bg) */
+    --color-surface: #18221B;
+    --color-surface-secondary: #222E26;
+    --color-surface-tertiary: #2C3A30;
+    --color-surface-hover: #1E2B22;
 
     /* Typography Colors */
-    --color-ink: #EAF0E8;
-    --color-ink-secondary: #A8B5A6;
-    --color-ink-muted: #7A8778;
-    --color-ink-subtle: #556054;
+    --color-ink: #EDF3EC;
+    --color-ink-secondary: #B0BEAE;
+    --color-ink-muted: #80907F;
+    --color-ink-subtle: #5B6A5A;
 
-    /* Structural Borders & Rules (Close to transparent) */
+    /* Structural Borders & Rules (Soft, 0.08 opacity) */
     --color-border: rgba(255, 255, 255, 0.08);
     --color-border-subtle: rgba(255, 255, 255, 0.04);
     --color-border-hover: rgba(255, 255, 255, 0.16);
@@ -69,8 +78,10 @@
     --color-primary: #52B877;
     --color-primary-hover: #67C78A;
     --color-primary-contrast: #0A120D;
-    --color-primary-subtle: #162B1D;
-    --color-primary-border: rgba(82, 184, 119, 0.14);
+
+    /* Badge Background & Border (Crisp & Distinct in Dark Mode) */
+    --color-primary-subtle: #123320;
+    --color-primary-border: rgba(82, 184, 119, 0.22);
 
     /* Secondary Accent */
     --color-accent-blue: #6FA2D1;
@@ -80,26 +91,31 @@
     --color-focus: #52B877;
     --color-focus-ring: transparent;
 
-    /* Shadows */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+    /* Elevation Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-card: 0 2px 6px rgba(0, 0, 0, 0.45), 0 6px 18px rgba(0, 0, 0, 0.35);
+    --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.55), 0 10px 24px rgba(0, 0, 0, 0.45);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
     --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.6);
   }
 }
 
 [data-theme="dark"] {
-  --color-bg: #0C100D;
-  --color-surface: #141A15;
-  --color-surface-secondary: #1B221C;
-  --color-surface-tertiary: #232C24;
-  --color-surface-hover: #182019;
+  /* Canvas & Main Page Background */
+  --color-bg: #0A0E0C;
 
-  --color-ink: #EAF0E8;
-  --color-ink-secondary: #A8B5A6;
-  --color-ink-muted: #7A8778;
-  --color-ink-subtle: #556054;
+  /* Container Surfaces */
+  --color-surface: #18221B;
+  --color-surface-secondary: #222E26;
+  --color-surface-tertiary: #2C3A30;
+  --color-surface-hover: #1E2B22;
 
-  /* Structural Borders & Rules (Close to transparent) */
+  --color-ink: #EDF3EC;
+  --color-ink-secondary: #B0BEAE;
+  --color-ink-muted: #80907F;
+  --color-ink-subtle: #5B6A5A;
+
+  /* Structural Borders & Rules */
   --color-border: rgba(255, 255, 255, 0.08);
   --color-border-subtle: rgba(255, 255, 255, 0.04);
   --color-border-hover: rgba(255, 255, 255, 0.16);
@@ -107,8 +123,9 @@
   --color-primary: #52B877;
   --color-primary-hover: #67C78A;
   --color-primary-contrast: #0A120D;
-  --color-primary-subtle: #162B1D;
-  --color-primary-border: rgba(82, 184, 119, 0.14);
+
+  --color-primary-subtle: #123320;
+  --color-primary-border: rgba(82, 184, 119, 0.22);
 
   --color-accent-blue: #6FA2D1;
   --color-accent-blue-subtle: #152535;
@@ -116,7 +133,9 @@
   --color-focus: #52B877;
   --color-focus-ring: transparent;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 2px 6px rgba(0, 0, 0, 0.45), 0 6px 18px rgba(0, 0, 0, 0.35);
+  --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.55), 0 10px 24px rgba(0, 0, 0, 0.45);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
   --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.6);
 }

@@ -64,7 +64,7 @@
   gap: var(--space-2);
 }
 
-/* Theme Toggle Button - Exact 36px height */
+/* Theme Toggle Button - Exact 36px height matching container surface */
 .theme-toggle-btn {
   display: inline-flex;
   align-items: center;
@@ -78,17 +78,18 @@
   margin: 0;
   padding: 0;
   border-radius: var(--radius-sm);
-  background-color: transparent;
+  background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   color: var(--color-ink-secondary);
   cursor: pointer;
   line-height: normal;
   vertical-align: middle;
+  box-shadow: var(--shadow-sm);
   transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
 }
 
 .theme-toggle-btn:hover {
-  background-color: var(--color-surface-secondary);
+  background-color: var(--color-surface-hover);
   color: var(--color-ink);
   border-color: var(--color-border-hover);
 }
@@ -106,7 +107,14 @@
   padding: 0 14px;
   line-height: normal;
   vertical-align: middle;
+  background-color: var(--color-surface);
   border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.header-actions .btn:hover {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-border-hover);
 }
 
 .hero-section {

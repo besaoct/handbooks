@@ -39,10 +39,11 @@
   background-color: var(--color-surface);
   border-color: var(--color-border);
   color: var(--color-ink);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-secondary:hover {
-  background-color: var(--color-surface-secondary);
+  background-color: var(--color-surface-hover);
   border-color: var(--color-border-hover);
   color: var(--color-ink);
 }

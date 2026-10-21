@@ -107,13 +107,14 @@
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   color: var(--color-ink-secondary);
+  box-shadow: var(--shadow-sm);
   cursor: pointer;
   transition: all var(--transition-fast);
   user-select: none;
 }
 
 .filter-btn:hover {
-  background-color: var(--color-surface-secondary);
+  background-color: var(--color-surface-hover);
   color: var(--color-ink);
   border-color: var(--color-border-hover);
 }
