@@ -64,7 +64,7 @@
   gap: var(--space-2);
 }
 
-/* Theme Toggle Button - Exact 36px height matching container surface */
+/* Theme Toggle Button - Exact 36px height with distinct background, NO shadow */
 .theme-toggle-btn {
   display: inline-flex;
   align-items: center;
@@ -78,23 +78,23 @@
   margin: 0;
   padding: 0;
   border-radius: var(--radius-sm);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
+  background-color: var(--color-header-btn-bg);
+  border: 1px solid transparent;
   color: var(--color-ink-secondary);
   cursor: pointer;
   line-height: normal;
   vertical-align: middle;
-  box-shadow: var(--shadow-sm);
-  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+  box-shadow: none !important;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 .theme-toggle-btn:hover {
-  background-color: var(--color-surface-hover);
+  background-color: var(--color-header-btn-hover);
   color: var(--color-ink);
   border-color: transparent;
 }
 
-/* GitHub Action Button in Header - Exact 36px height matching theme button */
+/* GitHub Action Button in Header - Exact 36px height matching theme button, NO shadow */
 .header-actions .btn {
   display: inline-flex;
   align-items: center;
@@ -107,14 +107,17 @@
   padding: 0 14px;
   line-height: normal;
   vertical-align: middle;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-sm);
+  background-color: var(--color-header-btn-bg);
+  border: 1px solid transparent;
+  color: var(--color-ink);
+  box-shadow: none !important;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 .header-actions .btn:hover {
-  background-color: var(--color-surface-hover);
+  background-color: var(--color-header-btn-hover);
   border-color: transparent;
+  color: var(--color-ink);
 }
 
 .hero-section {

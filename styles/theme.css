@@ -40,6 +40,10 @@
   --color-accent-blue: #2B577E;
   --color-accent-blue-subtle: #E1EAF2;
 
+  /* Header Action Buttons (Distinct against header surface, no shadow) */
+  --color-header-btn-bg: #EAEFE7;
+  --color-header-btn-hover: #DFE6DB;
+
   /* Interactive States */
   --color-focus: #1E663B;
   --color-focus-ring: transparent;
@@ -87,6 +91,10 @@
     --color-accent-blue: #6FA2D1;
     --color-accent-blue-subtle: #152535;
 
+    /* Header Action Buttons in Dark Mode */
+    --color-header-btn-bg: #243128;
+    --color-header-btn-hover: #2E3E33;
+
     /* Interactive States */
     --color-focus: #52B877;
     --color-focus-ring: transparent;
@@ -129,6 +137,10 @@
 
   --color-accent-blue: #6FA2D1;
   --color-accent-blue-subtle: #152535;
+
+  /* Header Action Buttons in Dark Mode */
+  --color-header-btn-bg: #243128;
+  --color-header-btn-hover: #2E3E33;
 
   --color-focus: #52B877;
   --color-focus-ring: transparent;

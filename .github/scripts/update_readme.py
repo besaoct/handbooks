@@ -304,7 +304,7 @@ def generate_index_html(handbooks):
   <meta name="description" content="In-depth, interactive engineering handbooks covering Go, Python, JavaScript, React/Next.js, Flutter, DevOps, SQL, Express/MongoDB, and System Design." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="styles/main.css?v=8" />
+  <link rel="stylesheet" href="styles/main.css?v=9" />
 </head>
 <body>
   <!-- Global Navigation Header -->
