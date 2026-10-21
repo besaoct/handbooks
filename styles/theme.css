@@ -19,17 +19,17 @@
   --color-ink-muted: #6B776A;
   --color-ink-subtle: #929E91;
 
-  /* Structural Borders & Rules */
-  --color-border: #D2D9D0;
-  --color-border-subtle: #E2E7E0;
-  --color-border-hover: #B5BFB2;
+  /* Structural Borders & Rules (0.3 opacity) */
+  --color-border: rgba(19, 24, 20, 0.3);
+  --color-border-subtle: rgba(19, 24, 20, 0.15);
+  --color-border-hover: rgba(19, 24, 20, 0.45);
 
   /* Brand & Accents (Workshop Forest Green) */
   --color-primary: #21663D;
   --color-primary-hover: #195230;
   --color-primary-contrast: #FFFFFF;
   --color-primary-subtle: #E3EFE7;
-  --color-primary-border: #BCD9C5;
+  --color-primary-border: rgba(33, 102, 61, 0.3);
 
   /* Secondary Accent (Technical Slate) */
   --color-accent-blue: #2B577E;
@@ -60,17 +60,17 @@
     --color-ink-muted: #7A8778;
     --color-ink-subtle: #556054;
 
-    /* Structural Borders & Rules */
-    --color-border: #232C24;
-    --color-border-subtle: #1C231D;
-    --color-border-hover: #333F34;
+    /* Structural Borders & Rules (0.3 opacity) */
+    --color-border: rgba(234, 240, 232, 0.3);
+    --color-border-subtle: rgba(234, 240, 232, 0.15);
+    --color-border-hover: rgba(234, 240, 232, 0.45);
 
     /* Brand & Accents */
     --color-primary: #52B877;
     --color-primary-hover: #67C78A;
     --color-primary-contrast: #0A120D;
     --color-primary-subtle: #162B1D;
-    --color-primary-border: #23472F;
+    --color-primary-border: rgba(82, 184, 119, 0.3);
 
     /* Secondary Accent */
     --color-accent-blue: #6FA2D1;
@@ -99,15 +99,16 @@
   --color-ink-muted: #7A8778;
   --color-ink-subtle: #556054;
 
-  --color-border: #232C24;
-  --color-border-subtle: #1C231D;
-  --color-border-hover: #333F34;
+  /* Structural Borders & Rules (0.3 opacity) */
+  --color-border: rgba(234, 240, 232, 0.3);
+  --color-border-subtle: rgba(234, 240, 232, 0.15);
+  --color-border-hover: rgba(234, 240, 232, 0.45);
 
   --color-primary: #52B877;
   --color-primary-hover: #67C78A;
   --color-primary-contrast: #0A120D;
   --color-primary-subtle: #162B1D;
-  --color-primary-border: #23472F;
+  --color-primary-border: rgba(82, 184, 119, 0.3);
 
   --color-accent-blue: #6FA2D1;
   --color-accent-blue-subtle: #152535;

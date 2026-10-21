@@ -31,8 +31,20 @@ body {
 
 :focus-visible {
   outline: none;
-  border-color: var(--color-focus) !important;
-  box-shadow: 0 0 0 1px var(--color-focus), 0 0 0 3px var(--color-focus-ring) !important;
+  border-color: var(--color-focus);
+  box-shadow: 0 0 0 1px var(--color-focus), 0 0 0 3px var(--color-focus-ring);
+}
+
+/* Input fields: no focus outline, rings, or shadow */
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible,
+select:focus,
+select:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: var(--color-border-hover) !important;
 }
 
 /* Layout Containers */

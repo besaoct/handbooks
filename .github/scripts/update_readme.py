@@ -336,11 +336,6 @@ def generate_index_html(handbooks):
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="container">
-      <div class="hero-meta">
-        <span>Production Reference Library</span>
-        <span>&bull;</span>
-        <span>Standalone Offline Volumes</span>
-      </div>
       <h1 class="hero-title">Engineering Handbooks</h1>
       <p class="hero-description">A curated collection of deep, standalone technical manuals, architecture walkthroughs, and problem banks spanning systems, backend, frontend, and DevOps.</p>
     </div>

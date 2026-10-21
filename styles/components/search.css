@@ -51,6 +51,13 @@
   border-color: var(--color-border-hover);
 }
 
+.search-input:focus,
+.search-input:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: var(--color-border-hover);
+}
+
 .search-kbd-hint {
   position: absolute;
   right: var(--space-3);
@@ -86,7 +93,9 @@
   font-family: var(--font-sans);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  padding: 6px 14px;
+  height: 32px;
+  box-sizing: border-box;
+  padding: 0 14px;
   border-radius: var(--radius-sm);
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
