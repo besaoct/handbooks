@@ -22,29 +22,36 @@ body {
   flex-direction: column;
 }
 
-/* Accessibility Focus Styling:
-   Removes aggressive, glowing browser defaults while guaranteeing
-   a crisp, accessible, high-contrast indicator for keyboard navigation. */
+/* Accessibility Focus Styling for non-input interactive controls */
 :focus {
   outline: none;
 }
 
-:focus-visible {
+button:focus-visible,
+a:focus-visible {
   outline: none;
   border-color: var(--color-focus);
-  box-shadow: 0 0 0 1px var(--color-focus), 0 0 0 3px var(--color-focus-ring);
 }
 
-/* Input fields: no focus outline, rings, or shadow */
+/* INPUT FIELDS: Strictly NO outline, NO focus rings, NO shadows, NO glow */
+input,
 input:focus,
 input:focus-visible,
+input:active,
+textarea,
 textarea:focus,
 textarea:focus-visible,
+textarea:active,
+select,
 select:focus,
-select:focus-visible {
+select:focus-visible,
+select:active {
   outline: none !important;
+  outline-style: none !important;
+  outline-width: 0 !important;
+  outline-color: transparent !important;
   box-shadow: none !important;
-  border-color: var(--color-border-hover) !important;
+  -webkit-box-shadow: none !important;
 }
 
 /* Layout Containers */

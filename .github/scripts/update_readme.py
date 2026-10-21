@@ -305,7 +305,7 @@ def generate_index_html(handbooks):
   <meta name="description" content="In-depth, interactive engineering handbooks covering Go, Python, JavaScript, React/Next.js, Flutter, DevOps, SQL, Express/MongoDB, and System Design." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/main.css?v=3" />
 </head>
 <body>
   <!-- Global Navigation Header -->
@@ -508,10 +508,36 @@ def generate_index_html(handbooks):
     print("✓ Generated production index.html portal successfully.")
 
 
+def bundle_styles():
+    """Bundles modular CSS files into styles/main.css to avoid @import latency and cache issues."""
+    order = [
+        "styles/tokens.css",
+        "styles/theme.css",
+        "styles/typography.css",
+        "styles/global.css",
+        "styles/components/header.css",
+        "styles/components/search.css",
+        "styles/components/cards.css",
+        "styles/components/buttons.css",
+        "styles/components/footer.css"
+    ]
+    parts = []
+    for path in order:
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as f:
+                parts.append(f"/* === {path} === */\n" + f.read())
+    with open("styles/main.css", "w", encoding="utf-8") as out:
+        out.write("\n\n".join(parts))
+    print("✓ Bundled styles into styles/main.css successfully.")
+
+
 def main():
     if not os.path.exists(HANDBOOKS_DIR):
         print(f"Error: {HANDBOOKS_DIR} directory does not exist.")
         return
+
+    # Bundle modular CSS into main.css
+    bundle_styles()
 
     html_files = sorted(glob.glob(os.path.join(HANDBOOKS_DIR, "*.html")))
     print(f"Found {len(html_files)} handbook(s) in {HANDBOOKS_DIR}/")

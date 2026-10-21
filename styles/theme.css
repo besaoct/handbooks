@@ -1,7 +1,7 @@
 /**
  * Theme & Color Tokens
  * Supports light and dark modes with intentional, calm palette.
- * Aligns directly with the engineering handbook interior aesthetics.
+ * Borders explicitly configured with 0.3 opacity.
  */
 
 :root,
@@ -19,10 +19,10 @@
   --color-ink-muted: #6B776A;
   --color-ink-subtle: #929E91;
 
-  /* Structural Borders & Rules (0.3 opacity) */
-  --color-border: rgba(19, 24, 20, 0.3);
-  --color-border-subtle: rgba(19, 24, 20, 0.15);
-  --color-border-hover: rgba(19, 24, 20, 0.45);
+  /* Structural Borders & Rules (Explicit 0.3 Opacity) */
+  --color-border: rgba(0, 0, 0, 0.3);
+  --color-border-subtle: rgba(0, 0, 0, 0.15);
+  --color-border-hover: rgba(0, 0, 0, 0.45);
 
   /* Brand & Accents (Workshop Forest Green) */
   --color-primary: #21663D;
@@ -37,12 +37,12 @@
 
   /* Interactive States */
   --color-focus: #21663D;
-  --color-focus-ring: rgba(33, 102, 61, 0.25);
+  --color-focus-ring: transparent;
 
-  /* Shadows (Subtle, structural, not floating clouds) */
+  /* Shadows (Subtle, structural) */
   --shadow-sm: 0 1px 2px rgba(19, 24, 20, 0.05);
-  --shadow-md: 0 3px 8px -1px rgba(19, 24, 20, 0.08), 0 1px 2px rgba(19, 24, 20, 0.04);
-  --shadow-lg: 0 8px 18px -3px rgba(19, 24, 20, 0.12), 0 2px 4px rgba(19, 24, 20, 0.04);
+  --shadow-md: 0 3px 8px -1px rgba(19, 24, 20, 0.08);
+  --shadow-lg: 0 8px 18px -3px rgba(19, 24, 20, 0.12);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -60,10 +60,10 @@
     --color-ink-muted: #7A8778;
     --color-ink-subtle: #556054;
 
-    /* Structural Borders & Rules (0.3 opacity) */
-    --color-border: rgba(234, 240, 232, 0.3);
-    --color-border-subtle: rgba(234, 240, 232, 0.15);
-    --color-border-hover: rgba(234, 240, 232, 0.45);
+    /* Structural Borders & Rules (Explicit 0.3 Opacity) */
+    --color-border: rgba(255, 255, 255, 0.3);
+    --color-border-subtle: rgba(255, 255, 255, 0.15);
+    --color-border-hover: rgba(255, 255, 255, 0.45);
 
     /* Brand & Accents */
     --color-primary: #52B877;
@@ -78,7 +78,7 @@
 
     /* Interactive States */
     --color-focus: #52B877;
-    --color-focus-ring: rgba(82, 184, 119, 0.3);
+    --color-focus-ring: transparent;
 
     /* Shadows */
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
@@ -99,10 +99,10 @@
   --color-ink-muted: #7A8778;
   --color-ink-subtle: #556054;
 
-  /* Structural Borders & Rules (0.3 opacity) */
-  --color-border: rgba(234, 240, 232, 0.3);
-  --color-border-subtle: rgba(234, 240, 232, 0.15);
-  --color-border-hover: rgba(234, 240, 232, 0.45);
+  /* Structural Borders & Rules (Explicit 0.3 Opacity) */
+  --color-border: rgba(255, 255, 255, 0.3);
+  --color-border-subtle: rgba(255, 255, 255, 0.15);
+  --color-border-hover: rgba(255, 255, 255, 0.45);
 
   --color-primary: #52B877;
   --color-primary-hover: #67C78A;
@@ -114,7 +114,7 @@
   --color-accent-blue-subtle: #152535;
 
   --color-focus: #52B877;
-  --color-focus-ring: rgba(82, 184, 119, 0.3);
+  --color-focus-ring: transparent;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
