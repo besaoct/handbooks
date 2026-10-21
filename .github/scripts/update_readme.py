@@ -14,7 +14,7 @@ import glob
 REPO_OWNER = "besaoct"
 REPO_NAME = "handbooks"
 PAGES_BASE_URL = f"https://{REPO_OWNER}.github.io/{REPO_NAME}"
-HANDBOOKS_DIR = "handbooks"
+HANDBOOKS_DIR = "docs"
 README_FILE = "README.md"
 INDEX_FILE = "index.html"
 
@@ -175,8 +175,8 @@ def generate_tree():
     for f in existing_top:
         tree_lines.append(f"├── {f}")
 
-    # 3. handbooks directory
-    tree_lines.append("└── handbooks/")
+    # 3. docs directory
+    tree_lines.append("└── docs/")
     hb_files = sorted(os.listdir(HANDBOOKS_DIR)) if os.path.exists(HANDBOOKS_DIR) else []
     hb_htmls = [f for f in hb_files if f.endswith(".html")]
     for i, hf in enumerate(hb_htmls):

@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'handbooks/**'
+      - 'docs/**'
       - '.github/scripts/**'
       - '.github/workflows/**'
       - 'README.md'
@@ -55,11 +55,11 @@ jobs:
 
       - name: Prepare site directory
         run: |
-          mkdir -p _site/handbooks
+          mkdir -p _site/docs
           cp index.html _site/
-          cp -r handbooks/*.html _site/handbooks/
+          cp -r docs/*.html _site/docs/
           # Also copy directly to root of site for convenient short URLs
-          cp -r handbooks/*.html _site/
+          cp -r docs/*.html _site/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
