@@ -1,0 +1,74 @@
+name: Deploy Handbooks to GitHub Pages & Update Catalog
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'handbooks/**'
+      - '.github/scripts/**'
+      - '.github/workflows/**'
+      - 'README.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Catalog & README Updater
+        run: |
+          python3 .github/scripts/update_readme.py
+
+      - name: Commit and push dynamic catalog changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain README.md index.html)" ]; then
+            git add README.md index.html
+            git commit -m "docs: auto-update catalog and README [skip ci]"
+            git push
+          else
+            echo "Catalog and README are up to date. No commit needed."
+          fi
+
+      - name: Prepare site directory
+        run: |
+          mkdir -p _site/handbooks
+          cp index.html _site/
+          cp -r handbooks/*.html _site/handbooks/
+          # Also copy directly to root of site for convenient short URLs
+          cp -r handbooks/*.html _site/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
