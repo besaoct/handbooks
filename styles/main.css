@@ -104,9 +104,9 @@
   --color-primary-hover: #16502E;
   --color-primary-contrast: #FFFFFF;
 
-  /* Badge Background & Border (Crisp & Distinct) */
+  /* Badge Background & Border (Almost Transparent Border) */
   --color-primary-subtle: #D8ECDD;
-  --color-primary-border: rgba(30, 102, 59, 0.18);
+  --color-primary-border: transparent;
 
   /* Secondary Accent (Technical Slate) */
   --color-accent-blue: #2B577E;
@@ -151,9 +151,9 @@
     --color-primary-hover: #67C78A;
     --color-primary-contrast: #0A120D;
 
-    /* Badge Background & Border (Crisp & Distinct in Dark Mode) */
+    /* Badge Background & Border (Almost Transparent in Dark Mode) */
     --color-primary-subtle: #123320;
-    --color-primary-border: rgba(82, 184, 119, 0.22);
+    --color-primary-border: transparent;
 
     /* Secondary Accent */
     --color-accent-blue: #6FA2D1;
@@ -197,7 +197,7 @@
   --color-primary-contrast: #0A120D;
 
   --color-primary-subtle: #123320;
-  --color-primary-border: rgba(82, 184, 119, 0.22);
+  --color-primary-border: transparent;
 
   --color-accent-blue: #6FA2D1;
   --color-accent-blue-subtle: #152535;
@@ -432,7 +432,7 @@ img, svg {
   height: 28px;
   border-radius: var(--radius-sm);
   background-color: var(--color-primary-subtle);
-  border: 1px solid var(--color-primary-border);
+  border: 1px solid transparent;
   color: var(--color-primary);
   display: flex;
   align-items: center;
@@ -453,7 +453,7 @@ img, svg {
   font-size: var(--font-size-xs);
   color: var(--color-ink-muted);
   background-color: var(--color-surface-secondary);
-  border: 1px solid var(--color-border-subtle);
+  border: 1px solid transparent;
   padding: 2px 7px;
   border-radius: var(--radius-xs);
   margin-left: var(--space-1);
@@ -634,7 +634,7 @@ img, svg {
   font-size: var(--font-size-xs);
   color: var(--color-ink-muted);
   background-color: var(--color-surface-secondary);
-  border: 1px solid var(--color-border);
+  border: 1px solid transparent;
   border-radius: var(--radius-xs);
   pointer-events: none;
 }
@@ -675,7 +675,7 @@ img, svg {
 
 .filter-btn.active {
   background-color: var(--color-primary-subtle);
-  border-color: var(--color-primary-border);
+  border-color: transparent;
   color: var(--color-primary);
   font-weight: var(--font-weight-semibold);
 }
@@ -764,7 +764,7 @@ img, svg {
   padding: 3px 8px;
   border-radius: var(--radius-xs);
   background-color: var(--color-primary-subtle);
-  border: 1px solid var(--color-primary-border);
+  border: 1px solid transparent;
   color: var(--color-primary);
   white-space: nowrap;
 }
@@ -891,7 +891,7 @@ img, svg {
 .btn-primary {
   background-color: var(--color-primary);
   color: var(--color-primary-contrast);
-  border-color: var(--color-primary-border);
+  border-color: transparent;
 }
 
 .btn-primary:hover {

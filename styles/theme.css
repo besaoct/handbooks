@@ -32,9 +32,9 @@
   --color-primary-hover: #16502E;
   --color-primary-contrast: #FFFFFF;
 
-  /* Badge Background & Border (Crisp & Distinct) */
+  /* Badge Background & Border (Almost Transparent Border) */
   --color-primary-subtle: #D8ECDD;
-  --color-primary-border: rgba(30, 102, 59, 0.18);
+  --color-primary-border: transparent;
 
   /* Secondary Accent (Technical Slate) */
   --color-accent-blue: #2B577E;
@@ -79,9 +79,9 @@
     --color-primary-hover: #67C78A;
     --color-primary-contrast: #0A120D;
 
-    /* Badge Background & Border (Crisp & Distinct in Dark Mode) */
+    /* Badge Background & Border (Almost Transparent in Dark Mode) */
     --color-primary-subtle: #123320;
-    --color-primary-border: rgba(82, 184, 119, 0.22);
+    --color-primary-border: transparent;
 
     /* Secondary Accent */
     --color-accent-blue: #6FA2D1;
@@ -125,7 +125,7 @@
   --color-primary-contrast: #0A120D;
 
   --color-primary-subtle: #123320;
-  --color-primary-border: rgba(82, 184, 119, 0.22);
+  --color-primary-border: transparent;
 
   --color-accent-blue: #6FA2D1;
   --color-accent-blue-subtle: #152535;
