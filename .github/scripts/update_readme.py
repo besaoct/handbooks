@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
 update_readme.py
-Scans the handbooks/ directory, extracts metadata from each handbook HTML file,
+Scans the docs/ directory, extracts metadata from each handbook HTML file,
 and dynamically updates the README.md table and repository structure tree.
-Also generates an interactive index.html portal for GitHub Pages.
+Also generates a production-quality, accessible index.html portal consuming
+the centralized CSS design system in styles/.
 """
 
 import os
@@ -18,42 +19,60 @@ HANDBOOKS_DIR = "docs"
 README_FILE = "README.md"
 INDEX_FILE = "index.html"
 
-# Known curated metadata fallbacks / highlights for well-known handbooks
+# Curated metadata highlights and categories
 CURATED_METADATA = {
     "db-sql.html": {
         "name": "SQL & Systems",
+        "category": "backend data",
+        "badge": "Databases & Scale",
         "description": "1000+ problems with solutions. Covers SELECT, Joins, Aggregation, Subqueries & CTEs, Window functions, DDL/DML, Transactions & Locking, Indexing & Query Plans, Database internals, Replication, Sharding, Caching, and Datastore tradeoffs."
     },
     "devops-and-git.html": {
         "name": "DevOps & Git",
+        "category": "systems devops",
+        "badge": "Infra & Pipelines",
         "description": "Git object database internals, Linux systems & networking, Containers & Docker, Kubernetes orchestration, CI/CD pipelines, Infrastructure as Code, Observability, Incident response, and Production safety."
     },
     "express-mongo.html": {
         "name": "Express & MongoDB",
+        "category": "backend web",
+        "badge": "Backend Runtime",
         "description": "Node.js runtime, Event loop, HTTP/TCP sockets, Express middleware pipeline, Routing, Authentication & JWT, Security hardening, MongoDB schema design, Aggregation pipeline, Mongoose internals, and API performance."
     },
     "flutter.html": {
         "name": "Flutter & Dart",
+        "category": "frontend mobile",
+        "badge": "Cross-Platform UI",
         "description": "Dart type system & runtime, Widget tree architecture, Element & RenderObject lifecycle, Layout constraints & hit testing, State management paradigms, Animations, Platform channels, and Performance profiling."
     },
     "go.html": {
         "name": "Go",
+        "category": "backend systems languages",
+        "badge": "Systems & Concurrency",
         "description": "Go compiler & type system, Memory layout & escape analysis, Goroutine scheduler internals (M:N), Channels & concurrency primitives, Sync package, Memory management & GC, HTTP services, Profiling (pprof), and Production patterns."
     },
     "javascript.html": {
         "name": "JavaScript & Node.js",
+        "category": "languages frontend backend",
+        "badge": "Language Internals",
         "description": "ECMAScript specifications, V8 engine internals, Memory management, Prototypes & inheritance, Scope & Closures, Async/Await & Promises, Microtasks vs Macrotasks, Node.js libuv event loop, and 2000+ drill questions."
     },
     "python.html": {
         "name": "Python",
+        "category": "languages algorithms",
+        "badge": "Core & Algorithms",
         "description": "Python 3 data structures & algorithms, CPython internals, Bytecode execution, Memory & GIL, Generators & Iterators, Decorators, Concurrency (asyncio, threading, multiprocessing), and Contest-level drills."
     },
     "react-nextjs.html": {
         "name": "React & Next.js",
+        "category": "frontend web",
+        "badge": "Frontend Architecture",
         "description": "JSX compilation, Virtual DOM & Reconciliation, Fiber architecture & work loops, Concurrent React, Hooks deep-dive, Server Components (RSC), Streaming SSR, Next.js App Router, Caching strategies, and Hydration."
     },
     "system-design.html": {
         "name": "System Design",
+        "category": "systems backend",
+        "badge": "Distributed Architecture",
         "description": "Large-scale distributed architectures, Horizontal scalability, Data partitioning & consistent hashing, High availability & failover, Caching tiers (Redis/Memcached), Message queues & streaming (Kafka/RabbitMQ), and 15 complete end-to-end system designs."
     }
 }
@@ -63,7 +82,6 @@ def extract_metadata(file_path):
     curated = CURATED_METADATA.get(basename, {})
     
     with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-        # Read enough for headers and intro
         content = f.read(120000)
 
     # 1. Title
@@ -81,27 +99,22 @@ def extract_metadata(file_path):
     stand = html.unescape(re.sub(r"<[^>]+>", "", stand_match.group(1))).strip() if stand_match else ""
     stand = re.sub(r"\s+", " ", stand)
 
-    # Determine Display Name
-    if curated.get("name"):
-        name = curated["name"]
-    else:
-        # Derive from filename, e.g. "rust-lang.html" -> "Rust Lang"
-        slug = os.path.splitext(basename)[0]
-        name = " ".join(word.capitalize() for word in re.split(r"[-_]", slug))
+    # Determine Display Name & Badge
+    slug = os.path.splitext(basename)[0]
+    default_name = " ".join(word.capitalize() for word in re.split(r"[-_]", slug))
+    name = curated.get("name", default_name)
+    badge = curated.get("badge", "Handbook")
+    category = curated.get("category", "general")
 
-    # Determine Title & Subtitle
+    # Determine Title & Subtitle (Avoid em dashes in UI copy)
     if raw_title:
-        # If title contains separator like " — " or " - "
-        if " — " in raw_title:
-            parts = raw_title.split(" — ", 1)
-            display_title = parts[0].strip()
-            display_subtitle = parts[1].strip()
-        elif " - " in raw_title:
-            parts = raw_title.split(" - ", 1)
+        clean_title = raw_title.replace("—", ":").replace("–", ":")
+        if ":" in clean_title:
+            parts = clean_title.split(":", 1)
             display_title = parts[0].strip()
             display_subtitle = parts[1].strip()
         else:
-            display_title = raw_title
+            display_title = clean_title
             display_subtitle = h1
     else:
         display_title = name
@@ -123,6 +136,8 @@ def extract_metadata(file_path):
     return {
         "filename": basename,
         "name": name,
+        "badge": badge,
+        "category": category,
         "title": display_title,
         "subtitle": display_subtitle,
         "description": description,
@@ -163,7 +178,25 @@ def generate_tree():
     for wf in wf_files:
         tree_lines.append(f"│       └── {wf}")
 
-    # 2. Top-level files
+    # 2. docs directory
+    tree_lines.append("├── docs/")
+    doc_files = sorted(os.listdir(HANDBOOKS_DIR)) if os.path.exists(HANDBOOKS_DIR) else []
+    doc_htmls = [f for f in doc_files if f.endswith(".html")]
+    for dh in doc_htmls:
+        tree_lines.append(f"│   ├── {dh}")
+
+    # 3. styles directory
+    tree_lines.append("├── styles/")
+    tree_lines.append("│   ├── components/")
+    if os.path.exists("styles/components"):
+        for cf in sorted(os.listdir("styles/components")):
+            tree_lines.append(f"│   │   ├── {cf}")
+    style_root = ["global.css", "main.css", "theme.css", "tokens.css", "typography.css"]
+    for sf in style_root:
+        if os.path.exists(f"styles/{sf}"):
+            tree_lines.append(f"│   ├── {sf}")
+
+    # 4. Top-level files
     top_level_files = [
         ".gitignore",
         "CODE_OF_CONDUCT.md",
@@ -172,16 +205,9 @@ def generate_tree():
         "index.html",
     ]
     existing_top = [f for f in top_level_files if os.path.exists(f)]
-    for f in existing_top:
-        tree_lines.append(f"├── {f}")
-
-    # 3. docs directory
-    tree_lines.append("└── docs/")
-    hb_files = sorted(os.listdir(HANDBOOKS_DIR)) if os.path.exists(HANDBOOKS_DIR) else []
-    hb_htmls = [f for f in hb_files if f.endswith(".html")]
-    for i, hf in enumerate(hb_htmls):
-        prefix = "    └── " if i == len(hb_htmls) - 1 else "    ├── "
-        tree_lines.append(f"{prefix}{hf}")
+    for i, f in enumerate(existing_top):
+        prefix = "└── " if i == len(existing_top) - 1 else "├── "
+        tree_lines.append(f"{prefix}{f}")
 
     return "```text\n" + "\n".join(tree_lines) + "\n```"
 
@@ -193,9 +219,7 @@ def update_readme(handbooks):
     with open(README_FILE, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Generate new table
     table_content = generate_table(handbooks)
-    # Generate new tree
     tree_content = generate_tree()
 
     # Markers for Table
@@ -209,11 +233,9 @@ def update_readme(handbooks):
         )
         content = pattern.sub(f"{table_start_marker}\n{table_content}\n{table_end_marker}", content)
     else:
-        # Fallback if markers don't exist yet: replace existing table under ## 📚 Handbooks Catalog
         catalog_header = "## 📚 Handbooks Catalog"
         if catalog_header in content:
             parts = content.split(catalog_header, 1)
-            # Find next header or delimiter
             next_section = re.search(r"\n---\n|\n## ", parts[1])
             if next_section:
                 rest = parts[1][next_section.start():]
@@ -244,25 +266,33 @@ def update_readme(handbooks):
 
 
 def generate_index_html(handbooks):
-    """Generates an elegant landing page portal for GitHub Pages."""
+    """Generates a production-quality, accessible landing page consuming styles/main.css."""
+    total_count = len(handbooks)
     cards_html = []
+    
     for h in handbooks:
-        cards_html.append(f"""
-      <article class="card">
-        <div class="card-header">
-          <span class="badge">{html.escape(h['name'])}</span>
-          <span class="filename">{html.escape(h['filename'])}</span>
-        </div>
-        <h2 class="card-title">{html.escape(h['title'])}</h2>
-        {f'<p class="card-subtitle">{html.escape(h["subtitle"])}</p>' if h["subtitle"] and h["subtitle"] != h["title"] else ''}
-        <p class="card-desc">{html.escape(h['description'])}</p>
-        <div class="card-footer">
-          <a href="{html.escape(h['pages_url'])}" class="read-btn">
-            Read Handbook
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-      </article>""")
+        search_data = f"{h['name']} {h['title']} {h['subtitle']} {h['description']} {h['filename']}".lower()
+        subtitle_block = f'<p class="card-subtitle">{html.escape(h["subtitle"])}</p>' if h["subtitle"] and h["subtitle"] != h["title"] else ""
+        
+        cards_html.append(f"""        <article class="handbook-card" data-category="{html.escape(h['category'])}" data-search="{html.escape(search_data)}">
+          <div class="card-top">
+            <span class="card-badge">{html.escape(h['badge'])}</span>
+            <span class="card-filename">{html.escape(h['filename'])}</span>
+          </div>
+          <h2 class="card-title">{html.escape(h['title'])}</h2>
+          {subtitle_block}
+          <p class="card-description">{html.escape(h['description'])}</p>
+          <div class="card-footer">
+            <a href="{html.escape(h['pages_url'])}" class="btn btn-primary btn-sm">
+              Read Handbook
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="https://github.com/{REPO_OWNER}/{REPO_NAME}/blob/main/{HANDBOOKS_DIR}/{html.escape(h['filename'])}" class="card-source-link" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              Source
+            </a>
+          </div>
+        </article>""")
 
     cards_joined = "\n".join(cards_html)
 
@@ -271,248 +301,216 @@ def generate_index_html(handbooks):
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Engineering Handbooks Portal</title>
-  <meta name="description" content="Comprehensive interactive engineering handbooks covering Go, Python, JavaScript, React/Next.js, Flutter, DevOps, SQL, Express/MongoDB, and System Design." />
+  <title>Engineering Handbooks: Production Reference &amp; Question Banks</title>
+  <meta name="description" content="In-depth, interactive engineering handbooks covering Go, Python, JavaScript, React/Next.js, Flutter, DevOps, SQL, Express/MongoDB, and System Design." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {{
-      --bg: #0d1117;
-      --surface: #161b22;
-      --border: #30363d;
-      --text-main: #f0f6fc;
-      --text-muted: #8b949e;
-      --accent: #58a6ff;
-      --accent-hover: #79c0ff;
-      --card-bg: #161b22;
-      --card-border: #30363d;
-      --badge-bg: #1f6feb26;
-      --badge-text: #58a6ff;
-    }}
-    * {{
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }}
-    body {{
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text-main);
-      line-height: 1.6;
-      padding: 2.5rem 1.5rem 5rem;
-      min-height: 100vh;
-    }}
-    .container {{
-      max-width: 1200px;
-      margin: 0 auto;
-    }}
-    header {{
-      text-align: center;
-      margin-bottom: 3rem;
-    }}
-    .title {{
-      font-size: 2.75rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.75rem;
-      background: linear-gradient(135deg, #58a6ff 0%, #bc8cff 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }}
-    .subtitle {{
-      color: var(--text-muted);
-      font-size: 1.15rem;
-      max-width: 720px;
-      margin: 0 auto 1.5rem;
-    }}
-    .actions {{
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }}
-    .gh-btn {{
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: #21262d;
-      color: #c9d1d9;
-      border: 1px solid var(--border);
-      padding: 0.5rem 1.25rem;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 600;
-      transition: background 0.2s, border-color 0.2s;
-    }}
-    .gh-btn:hover {{
-      background: #30363d;
-      border-color: #8b949e;
-      color: #fff;
-    }}
-    .search-wrapper {{
-      max-width: 600px;
-      margin: 0 auto 3rem;
-      position: relative;
-    }}
-    .search-input {{
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      font-size: 1rem;
-      padding: 0.75rem 1.25rem;
-      border-radius: 8px;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }}
-    .search-input:focus {{
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
-    }}
-    .grid {{
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-      gap: 1.5rem;
-    }}
-    .card {{
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-    }}
-    .card:hover {{
-      transform: translateY(-3px);
-      border-color: #58a6ff66;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
-    }}
-    .card-header {{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.75rem;
-    }}
-    .badge {{
-      background: var(--badge-bg);
-      color: var(--badge-text);
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid rgba(88, 166, 255, 0.2);
-    }}
-    .filename {{
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }}
-    .card-title {{
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-      color: #fff;
-    }}
-    .card-subtitle {{
-      font-size: 0.9rem;
-      font-style: italic;
-      color: #8b949e;
-      margin-bottom: 0.75rem;
-    }}
-    .card-desc {{
-      font-size: 0.9rem;
-      color: #8b949e;
-      flex-grow: 1;
-      margin-bottom: 1.5rem;
-    }}
-    .card-footer {{
-      margin-top: auto;
-    }}
-    .read-btn {{
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--accent);
-      color: #0d1117;
-      font-size: 0.9rem;
-      font-weight: 600;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: background 0.2s;
-    }}
-    .read-btn:hover {{
-      background: var(--accent-hover);
-    }}
-    footer {{
-      margin-top: 5rem;
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border);
-      padding-top: 2rem;
-    }}
-    footer a {{
-      color: var(--accent);
-      text-decoration: none;
-    }}
-    footer a:hover {{
-      text-decoration: underline;
-    }}
-  </style>
+  <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1 class="title">Engineering Handbooks</h1>
-      <p class="subtitle">A curated collection of in-depth, interactive reference guides, architecture walk-throughs, and question banks.</p>
-      <div class="actions">
-        <a href="https://github.com/{REPO_OWNER}/{REPO_NAME}" class="gh-btn" target="_blank" rel="noopener">
-          <svg height="18" viewBox="0 0 16 16" width="18" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
-          View on GitHub
+  <!-- Global Navigation Header -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a href="https://besaoct.github.io/handbooks/" class="brand" aria-label="Engineering Handbooks Home">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <span class="brand-title">Engineering Handbooks</span>
+        <span class="brand-tag">{total_count} Volumes</span>
+      </a>
+
+      <div class="header-actions">
+        <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle visual theme" title="Toggle theme">
+          <svg id="themeIconSun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg id="themeIconMoon" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+
+        <a href="https://github.com/{REPO_OWNER}/{REPO_NAME}" class="btn btn-secondary btn-sm" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+          GitHub
         </a>
       </div>
-      <div class="search-wrapper">
-        <input type="text" id="searchInput" class="search-input" placeholder="Search handbooks by topic, keyword, or language..." />
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-meta">
+        <span>Production Reference Library</span>
+        <span>&bull;</span>
+        <span>Standalone Offline Volumes</span>
       </div>
-    </header>
+      <h1 class="hero-title">Engineering Handbooks</h1>
+      <p class="hero-description">A curated collection of deep, standalone technical manuals, architecture walkthroughs, and problem banks spanning systems, backend, frontend, and DevOps.</p>
+    </div>
+  </section>
 
-    <main class="grid" id="handbooksGrid">
+  <!-- Toolbar & Filters -->
+  <section class="toolbar-section">
+    <div class="container search-container">
+      <div class="search-input-wrapper">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search handbooks by title, topic, or keyword..." aria-label="Search handbooks" autocomplete="off" spellcheck="false" />
+        <span class="search-kbd-hint" aria-hidden="true">/</span>
+      </div>
+
+      <nav class="category-filters" aria-label="Filter handbooks by category">
+        <button class="filter-btn active" data-filter="all">All <span class="filter-count">({total_count})</span></button>
+        <button class="filter-btn" data-filter="systems">Systems &amp; Infra</button>
+        <button class="filter-btn" data-filter="backend">Backend &amp; Databases</button>
+        <button class="filter-btn" data-filter="frontend">Frontend &amp; UI</button>
+        <button class="filter-btn" data-filter="languages">Languages &amp; Core</button>
+      </nav>
+
+      <div class="toolbar-status">
+        <span id="statusCounter" class="status-counter">Showing {total_count} of {total_count} handbooks</span>
+        <button id="clearSearchBtn" class="clear-search-btn hidden">Clear search</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cards Grid -->
+  <main class="container">
+    <section class="handbooks-grid" id="handbooksGrid" aria-label="Handbooks catalog">
 {cards_joined}
-    </main>
 
-    <footer>
-      <p>Maintained by <a href="https://github.com/{REPO_OWNER}" target="_blank" rel="noopener">{REPO_OWNER}</a> &bull; Licensed under MIT &bull; Hosted on GitHub Pages</p>
-    </footer>
-  </div>
+      <div id="emptyState" class="empty-state hidden">
+        <h3 class="empty-state-title">No handbooks match your filter</h3>
+        <p class="empty-state-desc">Try searching for a different technology, keyword, or clear your current filter.</p>
+        <button id="resetFiltersBtn" class="btn btn-secondary btn-sm">Reset All Filters</button>
+      </div>
+    </section>
+  </main>
 
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-credits">
+        Curated by <a href="https://github.com/{REPO_OWNER}" target="_blank" rel="noopener">{REPO_OWNER}</a> &bull; Handbooks are standalone offline-ready HTML documents.
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://github.com/{REPO_OWNER}/{REPO_NAME}/blob/main/LICENSE">License (MIT)</a></li>
+        <li><a href="https://github.com/{REPO_OWNER}/{REPO_NAME}/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a></li>
+        <li><a href="https://github.com/{REPO_OWNER}/{REPO_NAME}">GitHub Repository</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
   <script>
-    const searchInput = document.getElementById('searchInput');
-    const cards = document.querySelectorAll('.card');
+    (function() {{
+      const searchInput = document.getElementById('searchInput');
+      const clearSearchBtn = document.getElementById('clearSearchBtn');
+      const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+      const statusCounter = document.getElementById('statusCounter');
+      const emptyState = document.getElementById('emptyState');
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const cards = Array.from(document.querySelectorAll('.handbook-card'));
+      const totalCount = cards.length;
 
-    searchInput.addEventListener('input', (e) => {{
-      const query = e.target.value.toLowerCase().trim();
-      cards.forEach(card => {{
-        const text = card.textContent.toLowerCase();
-        if (text.includes(query)) {{
-          card.style.display = 'flex';
-        }} else {{
-          card.style.display = 'none';
+      let currentCategory = 'all';
+      let currentQuery = '';
+
+      function filterCards() {{
+        let visibleCount = 0;
+
+        cards.forEach(card => {{
+          const cardCategories = (card.getAttribute('data-category') || '').split(' ');
+          const cardSearchText = card.getAttribute('data-search') || '';
+
+          const matchesCategory = (currentCategory === 'all') || cardCategories.includes(currentCategory);
+          const matchesQuery = !currentQuery || cardSearchText.includes(currentQuery);
+          const isVisible = matchesCategory && matchesQuery;
+
+          card.classList.toggle('hidden', !isVisible);
+          if (isVisible) visibleCount++;
+        }});
+
+        // Status update
+        statusCounter.textContent = `Showing ${{visibleCount}} of ${{totalCount}} handbooks`;
+        emptyState.classList.toggle('hidden', visibleCount > 0);
+        clearSearchBtn.classList.toggle('hidden', !currentQuery);
+      }}
+
+      // Search input handler
+      searchInput.addEventListener('input', (e) => {{
+        currentQuery = e.target.value.toLowerCase().trim();
+        filterCards();
+      }});
+
+      clearSearchBtn.addEventListener('click', () => {{
+        searchInput.value = '';
+        currentQuery = '';
+        filterCards();
+        searchInput.focus();
+      }});
+
+      resetFiltersBtn.addEventListener('click', () => {{
+        searchInput.value = '';
+        currentQuery = '';
+        currentCategory = 'all';
+        filterButtons.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-filter') === 'all'));
+        filterCards();
+        searchInput.focus();
+      }});
+
+      // Category filter buttons
+      filterButtons.forEach(btn => {{
+        btn.addEventListener('click', () => {{
+          filterButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentCategory = btn.getAttribute('data-filter');
+          filterCards();
+        }});
+      }});
+
+      // Keyboard shortcut: '/' to focus search input
+      window.addEventListener('keydown', (e) => {{
+        if (e.key === '/' && document.activeElement !== searchInput && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {{
+          e.preventDefault();
+          searchInput.focus();
         }}
       }});
-    }});
+
+      // Theme toggle functionality
+      const themeToggle = document.getElementById('themeToggle');
+      const sunIcon = document.getElementById('themeIconSun');
+      const moonIcon = document.getElementById('themeIconMoon');
+
+      function updateThemeIcons(isDark) {{
+        sunIcon.classList.toggle('hidden', !isDark);
+        moonIcon.classList.toggle('hidden', isDark);
+      }}
+
+      function getInitialTheme() {{
+        const saved = localStorage.getItem('theme');
+        if (saved) return saved;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }}
+
+      function setTheme(theme) {{
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        updateThemeIcons(theme === 'dark');
+      }}
+
+      const initialTheme = getInitialTheme();
+      setTheme(initialTheme);
+
+      themeToggle.addEventListener('click', () => {{
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        setTheme(next);
+      }});
+    }})();
   </script>
 </body>
 </html>"""
 
     with open(INDEX_FILE, "w", encoding="utf-8") as f:
         f.write(html_content)
-    print("✓ Generated index.html portal successfully.")
+    print("✓ Generated production index.html portal successfully.")
 
 
 def main():

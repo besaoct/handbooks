@@ -3,384 +3,379 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Engineering Handbooks Portal</title>
-  <meta name="description" content="Comprehensive interactive engineering handbooks covering Go, Python, JavaScript, React/Next.js, Flutter, DevOps, SQL, Express/MongoDB, and System Design." />
+  <title>Engineering Handbooks: Production Reference &amp; Question Banks</title>
+  <meta name="description" content="In-depth, interactive engineering handbooks covering Go, Python, JavaScript, React/Next.js, Flutter, DevOps, SQL, Express/MongoDB, and System Design." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #0d1117;
-      --surface: #161b22;
-      --border: #30363d;
-      --text-main: #f0f6fc;
-      --text-muted: #8b949e;
-      --accent: #58a6ff;
-      --accent-hover: #79c0ff;
-      --card-bg: #161b22;
-      --card-border: #30363d;
-      --badge-bg: #1f6feb26;
-      --badge-text: #58a6ff;
-    }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text-main);
-      line-height: 1.6;
-      padding: 2.5rem 1.5rem 5rem;
-      min-height: 100vh;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-    .title {
-      font-size: 2.75rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.75rem;
-      background: linear-gradient(135deg, #58a6ff 0%, #bc8cff 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .subtitle {
-      color: var(--text-muted);
-      font-size: 1.15rem;
-      max-width: 720px;
-      margin: 0 auto 1.5rem;
-    }
-    .actions {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    .gh-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: #21262d;
-      color: #c9d1d9;
-      border: 1px solid var(--border);
-      padding: 0.5rem 1.25rem;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 600;
-      transition: background 0.2s, border-color 0.2s;
-    }
-    .gh-btn:hover {
-      background: #30363d;
-      border-color: #8b949e;
-      color: #fff;
-    }
-    .search-wrapper {
-      max-width: 600px;
-      margin: 0 auto 3rem;
-      position: relative;
-    }
-    .search-input {
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      font-size: 1rem;
-      padding: 0.75rem 1.25rem;
-      border-radius: 8px;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .search-input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-      gap: 1.5rem;
-    }
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-    .card:hover {
-      transform: translateY(-3px);
-      border-color: #58a6ff66;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
-    }
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.75rem;
-    }
-    .badge {
-      background: var(--badge-bg);
-      color: var(--badge-text);
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid rgba(88, 166, 255, 0.2);
-    }
-    .filename {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-    .card-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-      color: #fff;
-    }
-    .card-subtitle {
-      font-size: 0.9rem;
-      font-style: italic;
-      color: #8b949e;
-      margin-bottom: 0.75rem;
-    }
-    .card-desc {
-      font-size: 0.9rem;
-      color: #8b949e;
-      flex-grow: 1;
-      margin-bottom: 1.5rem;
-    }
-    .card-footer {
-      margin-top: auto;
-    }
-    .read-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--accent);
-      color: #0d1117;
-      font-size: 0.9rem;
-      font-weight: 600;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .read-btn:hover {
-      background: var(--accent-hover);
-    }
-    footer {
-      margin-top: 5rem;
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border);
-      padding-top: 2rem;
-    }
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1 class="title">Engineering Handbooks</h1>
-      <p class="subtitle">A curated collection of in-depth, interactive reference guides, architecture walk-throughs, and question banks.</p>
-      <div class="actions">
-        <a href="https://github.com/besaoct/handbooks" class="gh-btn" target="_blank" rel="noopener">
-          <svg height="18" viewBox="0 0 16 16" width="18" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
-          View on GitHub
+  <!-- Global Navigation Header -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a href="https://besaoct.github.io/handbooks/" class="brand" aria-label="Engineering Handbooks Home">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <span class="brand-title">Engineering Handbooks</span>
+        <span class="brand-tag">9 Volumes</span>
+      </a>
+
+      <div class="header-actions">
+        <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle visual theme" title="Toggle theme">
+          <svg id="themeIconSun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg id="themeIconMoon" class="hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+
+        <a href="https://github.com/besaoct/handbooks" class="btn btn-secondary btn-sm" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+          GitHub
         </a>
       </div>
-      <div class="search-wrapper">
-        <input type="text" id="searchInput" class="search-input" placeholder="Search handbooks by topic, keyword, or language..." />
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-meta">
+        <span>Production Reference Library</span>
+        <span>&bull;</span>
+        <span>Standalone Offline Volumes</span>
       </div>
-    </header>
+      <h1 class="hero-title">Engineering Handbooks</h1>
+      <p class="hero-description">A curated collection of deep, standalone technical manuals, architecture walkthroughs, and problem banks spanning systems, backend, frontend, and DevOps.</p>
+    </div>
+  </section>
 
-    <main class="grid" id="handbooksGrid">
+  <!-- Toolbar & Filters -->
+  <section class="toolbar-section">
+    <div class="container search-container">
+      <div class="search-input-wrapper">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search handbooks by title, topic, or keyword..." aria-label="Search handbooks" autocomplete="off" spellcheck="false" />
+        <span class="search-kbd-hint" aria-hidden="true">/</span>
+      </div>
 
-      <article class="card">
-        <div class="card-header">
-          <span class="badge">SQL &amp; Systems</span>
-          <span class="filename">db-sql.html</span>
-        </div>
-        <h2 class="card-title">The SQL &amp; Systems Question Book</h2>
-        <p class="card-subtitle">1000+ problems with solutions</p>
-        <p class="card-desc">1000+ problems with solutions. Covers SELECT, Joins, Aggregation, Subqueries &amp; CTEs, Window functions, DDL/DML, Transactions &amp; Locking, Indexing &amp; Query Plans, Database internals, Replication, Sharding, Caching, and Datastore tradeoffs.</p>
-        <div class="card-footer">
-          <a href="https://besaoct.github.io/handbooks/docs/db-sql.html" class="read-btn">
-            Read Handbook
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-      </article>
+      <nav class="category-filters" aria-label="Filter handbooks by category">
+        <button class="filter-btn active" data-filter="all">All <span class="filter-count">(9)</span></button>
+        <button class="filter-btn" data-filter="systems">Systems &amp; Infra</button>
+        <button class="filter-btn" data-filter="backend">Backend &amp; Databases</button>
+        <button class="filter-btn" data-filter="frontend">Frontend &amp; UI</button>
+        <button class="filter-btn" data-filter="languages">Languages &amp; Core</button>
+      </nav>
 
-      <article class="card">
-        <div class="card-header">
-          <span class="badge">DevOps &amp; Git</span>
-          <span class="filename">devops-and-git.html</span>
-        </div>
-        <h2 class="card-title">Commit to Deploy</h2>
-        <p class="card-subtitle">Everything between a commit and a running system</p>
-        <p class="card-desc">Git object database internals, Linux systems &amp; networking, Containers &amp; Docker, Kubernetes orchestration, CI/CD pipelines, Infrastructure as Code, Observability, Incident response, and Production safety.</p>
-        <div class="card-footer">
-          <a href="https://besaoct.github.io/handbooks/docs/devops-and-git.html" class="read-btn">
-            Read Handbook
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-      </article>
+      <div class="toolbar-status">
+        <span id="statusCounter" class="status-counter">Showing 9 of 9 handbooks</span>
+        <button id="clearSearchBtn" class="clear-search-btn hidden">Clear search</button>
+      </div>
+    </div>
+  </section>
 
-      <article class="card">
-        <div class="card-header">
-          <span class="badge">Express &amp; MongoDB</span>
-          <span class="filename">express-mongo.html</span>
-        </div>
-        <h2 class="card-title">Request Pipeline Handbook</h2>
-        <p class="card-subtitle">Everything between the socket and the document</p>
-        <p class="card-desc">Node.js runtime, Event loop, HTTP/TCP sockets, Express middleware pipeline, Routing, Authentication &amp; JWT, Security hardening, MongoDB schema design, Aggregation pipeline, Mongoose internals, and API performance.</p>
-        <div class="card-footer">
-          <a href="https://besaoct.github.io/handbooks/docs/express-mongo.html" class="read-btn">
-            Read Handbook
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-      </article>
+  <!-- Cards Grid -->
+  <main class="container">
+    <section class="handbooks-grid" id="handbooksGrid" aria-label="Handbooks catalog">
+        <article class="handbook-card" data-category="backend data" data-search="sql &amp; systems the sql &amp; systems question book 1000+ problems with solutions 1000+ problems with solutions. covers select, joins, aggregation, subqueries &amp; ctes, window functions, ddl/dml, transactions &amp; locking, indexing &amp; query plans, database internals, replication, sharding, caching, and datastore tradeoffs. db-sql.html">
+          <div class="card-top">
+            <span class="card-badge">Databases &amp; Scale</span>
+            <span class="card-filename">db-sql.html</span>
+          </div>
+          <h2 class="card-title">The SQL &amp; Systems Question Book</h2>
+          <p class="card-subtitle">1000+ problems with solutions</p>
+          <p class="card-description">1000+ problems with solutions. Covers SELECT, Joins, Aggregation, Subqueries &amp; CTEs, Window functions, DDL/DML, Transactions &amp; Locking, Indexing &amp; Query Plans, Database internals, Replication, Sharding, Caching, and Datastore tradeoffs.</p>
+          <div class="card-footer">
+            <a href="https://besaoct.github.io/handbooks/docs/db-sql.html" class="btn btn-primary btn-sm">
+              Read Handbook
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="https://github.com/besaoct/handbooks/blob/main/docs/db-sql.html" class="card-source-link" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              Source
+            </a>
+          </div>
+        </article>
+        <article class="handbook-card" data-category="systems devops" data-search="devops &amp; git commit to deploy everything between a commit and a running system git object database internals, linux systems &amp; networking, containers &amp; docker, kubernetes orchestration, ci/cd pipelines, infrastructure as code, observability, incident response, and production safety. devops-and-git.html">
+          <div class="card-top">
+            <span class="card-badge">Infra &amp; Pipelines</span>
+            <span class="card-filename">devops-and-git.html</span>
+          </div>
+          <h2 class="card-title">Commit to Deploy</h2>
+          <p class="card-subtitle">Everything between a commit and a running system</p>
+          <p class="card-description">Git object database internals, Linux systems &amp; networking, Containers &amp; Docker, Kubernetes orchestration, CI/CD pipelines, Infrastructure as Code, Observability, Incident response, and Production safety.</p>
+          <div class="card-footer">
+            <a href="https://besaoct.github.io/handbooks/docs/devops-and-git.html" class="btn btn-primary btn-sm">
+              Read Handbook
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="https://github.com/besaoct/handbooks/blob/main/docs/devops-and-git.html" class="card-source-link" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              Source
+            </a>
+          </div>
+        </article>
+        <article class="handbook-card" data-category="backend web" data-search="express &amp; mongodb request pipeline handbook everything between the socket and the document node.js runtime, event loop, http/tcp sockets, express middleware pipeline, routing, authentication &amp; jwt, security hardening, mongodb schema design, aggregation pipeline, mongoose internals, and api performance. express-mongo.html">
+          <div class="card-top">
+            <span class="card-badge">Backend Runtime</span>
+            <span class="card-filename">express-mongo.html</span>
+          </div>
+          <h2 class="card-title">Request Pipeline Handbook</h2>
+          <p class="card-subtitle">Everything between the socket and the document</p>
+          <p class="card-description">Node.js runtime, Event loop, HTTP/TCP sockets, Express middleware pipeline, Routing, Authentication &amp; JWT, Security hardening, MongoDB schema design, Aggregation pipeline, Mongoose internals, and API performance.</p>
+          <div class="card-footer">
+            <a href="https://besaoct.github.io/handbooks/docs/express-mongo.html" class="btn btn-primary btn-sm">
+              Read Handbook
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="https://github.com/besaoct/handbooks/blob/main/docs/express-mongo.html" class="card-source-link" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              Source
+            </a>
+          </div>
+        </article>
+        <article class="handbook-card" data-category="frontend mobile" data-search="flutter &amp; dart widget tree handbook dart &amp; flutter, from the render tree up dart type system &amp; runtime, widget tree architecture, element &amp; renderobject lifecycle, layout constraints &amp; hit testing, state management paradigms, animations, platform channels, and performance profiling. flutter.html">
+          <div class="card-top">
+            <span class="card-badge">Cross-Platform UI</span>
+            <span class="card-filename">flutter.html</span>
+          </div>
+          <h2 class="card-title">Widget Tree Handbook</h2>
+          <p class="card-subtitle">Dart &amp; Flutter, from the render tree up</p>
+          <p class="card-description">Dart type system &amp; runtime, Widget tree architecture, Element &amp; RenderObject lifecycle, Layout constraints &amp; hit testing, State management paradigms, Animations, Platform channels, and Performance profiling.</p>
+          <div class="card-footer">
+            <a href="https://besaoct.github.io/handbooks/docs/flutter.html" class="btn btn-primary btn-sm">
+              Read Handbook
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="https://github.com/besaoct/handbooks/blob/main/docs/flutter.html" class="card-source-link" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              Source
+            </a>
+          </div>
+        </article>
+        <article class="handbook-card" data-category="backend systems languages" data-search="go compile, schedule, serve go, from the syntax to the scheduler to production go compiler &amp; type system, memory layout &amp; escape analysis, goroutine scheduler internals (m:n), channels &amp; concurrency primitives, sync package, memory management &amp; gc, http services, profiling (pprof), and production patterns. go.html">
+          <div class="card-top">
+            <span class="card-badge">Systems &amp; Concurrency</span>
+            <span class="card-filename">go.html</span>
+          </div>
+          <h2 class="card-title">Compile, Schedule, Serve</h2>
+          <p class="card-subtitle">Go, from the syntax to the scheduler to production</p>
+          <p class="card-description">Go compiler &amp; type system, Memory layout &amp; escape analysis, Goroutine scheduler internals (M:N), Channels &amp; concurrency primitives, Sync package, Memory management &amp; GC, HTTP services, Profiling (pprof), and Production patterns.</p>
+          <div class="card-footer">
+            <a href="https://besaoct.github.io/handbooks/docs/go.html" class="btn btn-primary btn-sm">
+              Read Handbook
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="https://github.com/besaoct/handbooks/blob/main/docs/go.html" class="card-source-link" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              Source
+            </a>
+          </div>
+        </article>
+        <article class="handbook-card" data-category="languages frontend backend" data-search="javascript &amp; node.js the javascript &amp; node.js handbook 2000+ problems with solutions ecmascript specifications, v8 engine internals, memory management, prototypes &amp; inheritance, scope &amp; closures, async/await &amp; promises, microtasks vs macrotasks, node.js libuv event loop, and 2000+ drill questions. javascript.html">
+          <div class="card-top">
+            <span class="card-badge">Language Internals</span>
+            <span class="card-filename">javascript.html</span>
+          </div>
+          <h2 class="card-title">The JavaScript &amp; Node.js Handbook</h2>
+          <p class="card-subtitle">2000+ problems with solutions</p>
+          <p class="card-description">ECMAScript specifications, V8 engine internals, Memory management, Prototypes &amp; inheritance, Scope &amp; Closures, Async/Await &amp; Promises, Microtasks vs Macrotasks, Node.js libuv event loop, and 2000+ drill questions.</p>
+          <div class="card-footer">
+            <a href="https://besaoct.github.io/handbooks/docs/javascript.html" class="btn btn-primary btn-sm">
+              Read Handbook
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="https://github.com/besaoct/handbooks/blob/main/docs/javascript.html" class="card-source-link" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              Source
+            </a>
+          </div>
+        </article>
+        <article class="handbook-card" data-category="languages algorithms" data-search="python the python handbook fundamentals, interviews, contests python 3 data structures &amp; algorithms, cpython internals, bytecode execution, memory &amp; gil, generators &amp; iterators, decorators, concurrency (asyncio, threading, multiprocessing), and contest-level drills. python.html">
+          <div class="card-top">
+            <span class="card-badge">Core &amp; Algorithms</span>
+            <span class="card-filename">python.html</span>
+          </div>
+          <h2 class="card-title">The Python Handbook</h2>
+          <p class="card-subtitle">fundamentals, interviews, contests</p>
+          <p class="card-description">Python 3 data structures &amp; algorithms, CPython internals, Bytecode execution, Memory &amp; GIL, Generators &amp; Iterators, Decorators, Concurrency (asyncio, threading, multiprocessing), and Contest-level drills.</p>
+          <div class="card-footer">
+            <a href="https://besaoct.github.io/handbooks/docs/python.html" class="btn btn-primary btn-sm">
+              Read Handbook
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="https://github.com/besaoct/handbooks/blob/main/docs/python.html" class="card-source-link" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              Source
+            </a>
+          </div>
+        </article>
+        <article class="handbook-card" data-category="frontend web" data-search="react &amp; next.js render and commit react, from the javascript up jsx compilation, virtual dom &amp; reconciliation, fiber architecture &amp; work loops, concurrent react, hooks deep-dive, server components (rsc), streaming ssr, next.js app router, caching strategies, and hydration. react-nextjs.html">
+          <div class="card-top">
+            <span class="card-badge">Frontend Architecture</span>
+            <span class="card-filename">react-nextjs.html</span>
+          </div>
+          <h2 class="card-title">Render and Commit</h2>
+          <p class="card-subtitle">React, from the JavaScript up</p>
+          <p class="card-description">JSX compilation, Virtual DOM &amp; Reconciliation, Fiber architecture &amp; work loops, Concurrent React, Hooks deep-dive, Server Components (RSC), Streaming SSR, Next.js App Router, Caching strategies, and Hydration.</p>
+          <div class="card-footer">
+            <a href="https://besaoct.github.io/handbooks/docs/react-nextjs.html" class="btn btn-primary btn-sm">
+              Read Handbook
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="https://github.com/besaoct/handbooks/blob/main/docs/react-nextjs.html" class="card-source-link" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              Source
+            </a>
+          </div>
+        </article>
+        <article class="handbook-card" data-category="systems backend" data-search="system design ten systems handbook fifteen systems, from whiteboard to production large-scale distributed architectures, horizontal scalability, data partitioning &amp; consistent hashing, high availability &amp; failover, caching tiers (redis/memcached), message queues &amp; streaming (kafka/rabbitmq), and 15 complete end-to-end system designs. system-design.html">
+          <div class="card-top">
+            <span class="card-badge">Distributed Architecture</span>
+            <span class="card-filename">system-design.html</span>
+          </div>
+          <h2 class="card-title">Ten Systems Handbook</h2>
+          <p class="card-subtitle">Fifteen systems, from whiteboard to production</p>
+          <p class="card-description">Large-scale distributed architectures, Horizontal scalability, Data partitioning &amp; consistent hashing, High availability &amp; failover, Caching tiers (Redis/Memcached), Message queues &amp; streaming (Kafka/RabbitMQ), and 15 complete end-to-end system designs.</p>
+          <div class="card-footer">
+            <a href="https://besaoct.github.io/handbooks/docs/system-design.html" class="btn btn-primary btn-sm">
+              Read Handbook
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="https://github.com/besaoct/handbooks/blob/main/docs/system-design.html" class="card-source-link" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              Source
+            </a>
+          </div>
+        </article>
 
-      <article class="card">
-        <div class="card-header">
-          <span class="badge">Flutter &amp; Dart</span>
-          <span class="filename">flutter.html</span>
-        </div>
-        <h2 class="card-title">Widget Tree Handbook</h2>
-        <p class="card-subtitle">Dart &amp; Flutter, from the render tree up</p>
-        <p class="card-desc">Dart type system &amp; runtime, Widget tree architecture, Element &amp; RenderObject lifecycle, Layout constraints &amp; hit testing, State management paradigms, Animations, Platform channels, and Performance profiling.</p>
-        <div class="card-footer">
-          <a href="https://besaoct.github.io/handbooks/docs/flutter.html" class="read-btn">
-            Read Handbook
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-      </article>
+      <div id="emptyState" class="empty-state hidden">
+        <h3 class="empty-state-title">No handbooks match your filter</h3>
+        <p class="empty-state-desc">Try searching for a different technology, keyword, or clear your current filter.</p>
+        <button id="resetFiltersBtn" class="btn btn-secondary btn-sm">Reset All Filters</button>
+      </div>
+    </section>
+  </main>
 
-      <article class="card">
-        <div class="card-header">
-          <span class="badge">Go</span>
-          <span class="filename">go.html</span>
-        </div>
-        <h2 class="card-title">Compile, Schedule, Serve</h2>
-        <p class="card-subtitle">Go, from the syntax to the scheduler to production</p>
-        <p class="card-desc">Go compiler &amp; type system, Memory layout &amp; escape analysis, Goroutine scheduler internals (M:N), Channels &amp; concurrency primitives, Sync package, Memory management &amp; GC, HTTP services, Profiling (pprof), and Production patterns.</p>
-        <div class="card-footer">
-          <a href="https://besaoct.github.io/handbooks/docs/go.html" class="read-btn">
-            Read Handbook
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-      </article>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-credits">
+        Curated by <a href="https://github.com/besaoct" target="_blank" rel="noopener">besaoct</a> &bull; Handbooks are standalone offline-ready HTML documents.
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://github.com/besaoct/handbooks/blob/main/LICENSE">License (MIT)</a></li>
+        <li><a href="https://github.com/besaoct/handbooks/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a></li>
+        <li><a href="https://github.com/besaoct/handbooks">GitHub Repository</a></li>
+      </ul>
+    </div>
+  </footer>
 
-      <article class="card">
-        <div class="card-header">
-          <span class="badge">JavaScript &amp; Node.js</span>
-          <span class="filename">javascript.html</span>
-        </div>
-        <h2 class="card-title">The JavaScript &amp; Node.js Handbook</h2>
-        <p class="card-subtitle">2000+ problems with solutions</p>
-        <p class="card-desc">ECMAScript specifications, V8 engine internals, Memory management, Prototypes &amp; inheritance, Scope &amp; Closures, Async/Await &amp; Promises, Microtasks vs Macrotasks, Node.js libuv event loop, and 2000+ drill questions.</p>
-        <div class="card-footer">
-          <a href="https://besaoct.github.io/handbooks/docs/javascript.html" class="read-btn">
-            Read Handbook
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-header">
-          <span class="badge">Python</span>
-          <span class="filename">python.html</span>
-        </div>
-        <h2 class="card-title">The Python Handbook</h2>
-        <p class="card-subtitle">fundamentals, interviews, contests</p>
-        <p class="card-desc">Python 3 data structures &amp; algorithms, CPython internals, Bytecode execution, Memory &amp; GIL, Generators &amp; Iterators, Decorators, Concurrency (asyncio, threading, multiprocessing), and Contest-level drills.</p>
-        <div class="card-footer">
-          <a href="https://besaoct.github.io/handbooks/docs/python.html" class="read-btn">
-            Read Handbook
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-header">
-          <span class="badge">React &amp; Next.js</span>
-          <span class="filename">react-nextjs.html</span>
-        </div>
-        <h2 class="card-title">Render and Commit</h2>
-        <p class="card-subtitle">React, from the JavaScript up</p>
-        <p class="card-desc">JSX compilation, Virtual DOM &amp; Reconciliation, Fiber architecture &amp; work loops, Concurrent React, Hooks deep-dive, Server Components (RSC), Streaming SSR, Next.js App Router, Caching strategies, and Hydration.</p>
-        <div class="card-footer">
-          <a href="https://besaoct.github.io/handbooks/docs/react-nextjs.html" class="read-btn">
-            Read Handbook
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-header">
-          <span class="badge">System Design</span>
-          <span class="filename">system-design.html</span>
-        </div>
-        <h2 class="card-title">Ten Systems Handbook</h2>
-        <p class="card-subtitle">Fifteen systems, from whiteboard to production</p>
-        <p class="card-desc">Large-scale distributed architectures, Horizontal scalability, Data partitioning &amp; consistent hashing, High availability &amp; failover, Caching tiers (Redis/Memcached), Message queues &amp; streaming (Kafka/RabbitMQ), and 15 complete end-to-end system designs.</p>
-        <div class="card-footer">
-          <a href="https://besaoct.github.io/handbooks/docs/system-design.html" class="read-btn">
-            Read Handbook
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-      </article>
-    </main>
-
-    <footer>
-      <p>Maintained by <a href="https://github.com/besaoct" target="_blank" rel="noopener">besaoct</a> &bull; Licensed under MIT &bull; Hosted on GitHub Pages</p>
-    </footer>
-  </div>
-
+  <!-- Application Logic -->
   <script>
-    const searchInput = document.getElementById('searchInput');
-    const cards = document.querySelectorAll('.card');
+    (function() {
+      const searchInput = document.getElementById('searchInput');
+      const clearSearchBtn = document.getElementById('clearSearchBtn');
+      const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+      const statusCounter = document.getElementById('statusCounter');
+      const emptyState = document.getElementById('emptyState');
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const cards = Array.from(document.querySelectorAll('.handbook-card'));
+      const totalCount = cards.length;
 
-    searchInput.addEventListener('input', (e) => {
-      const query = e.target.value.toLowerCase().trim();
-      cards.forEach(card => {
-        const text = card.textContent.toLowerCase();
-        if (text.includes(query)) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
+      let currentCategory = 'all';
+      let currentQuery = '';
+
+      function filterCards() {
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+          const cardCategories = (card.getAttribute('data-category') || '').split(' ');
+          const cardSearchText = card.getAttribute('data-search') || '';
+
+          const matchesCategory = (currentCategory === 'all') || cardCategories.includes(currentCategory);
+          const matchesQuery = !currentQuery || cardSearchText.includes(currentQuery);
+          const isVisible = matchesCategory && matchesQuery;
+
+          card.classList.toggle('hidden', !isVisible);
+          if (isVisible) visibleCount++;
+        });
+
+        // Status update
+        statusCounter.textContent = `Showing ${visibleCount} of ${totalCount} handbooks`;
+        emptyState.classList.toggle('hidden', visibleCount > 0);
+        clearSearchBtn.classList.toggle('hidden', !currentQuery);
+      }
+
+      // Search input handler
+      searchInput.addEventListener('input', (e) => {
+        currentQuery = e.target.value.toLowerCase().trim();
+        filterCards();
+      });
+
+      clearSearchBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        currentQuery = '';
+        filterCards();
+        searchInput.focus();
+      });
+
+      resetFiltersBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        currentQuery = '';
+        currentCategory = 'all';
+        filterButtons.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-filter') === 'all'));
+        filterCards();
+        searchInput.focus();
+      });
+
+      // Category filter buttons
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentCategory = btn.getAttribute('data-filter');
+          filterCards();
+        });
+      });
+
+      // Keyboard shortcut: '/' to focus search input
+      window.addEventListener('keydown', (e) => {
+        if (e.key === '/' && document.activeElement !== searchInput && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+          e.preventDefault();
+          searchInput.focus();
         }
       });
-    });
+
+      // Theme toggle functionality
+      const themeToggle = document.getElementById('themeToggle');
+      const sunIcon = document.getElementById('themeIconSun');
+      const moonIcon = document.getElementById('themeIconMoon');
+
+      function updateThemeIcons(isDark) {
+        sunIcon.classList.toggle('hidden', !isDark);
+        moonIcon.classList.toggle('hidden', isDark);
+      }
+
+      function getInitialTheme() {
+        const saved = localStorage.getItem('theme');
+        if (saved) return saved;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        updateThemeIcons(theme === 'dark');
+      }
+
+      const initialTheme = getInitialTheme();
+      setTheme(initialTheme);
+
+      themeToggle.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        setTheme(next);
+      });
+    })();
   </script>
 </body>
 </html>

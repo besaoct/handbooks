@@ -1,0 +1,121 @@
+/**
+ * Theme & Color Tokens
+ * Supports light and dark modes with intentional, calm palette.
+ * Aligns directly with the engineering handbook interior aesthetics.
+ */
+
+:root,
+[data-theme="light"] {
+  /* Canvas & Surfaces */
+  --color-bg: #F4F6F3;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #EBEFEA;
+  --color-surface-tertiary: #E1E7E0;
+  --color-surface-hover: #F8FAF7;
+
+  /* Typography Colors */
+  --color-ink: #131814;
+  --color-ink-secondary: #424D41;
+  --color-ink-muted: #6B776A;
+  --color-ink-subtle: #929E91;
+
+  /* Structural Borders & Rules */
+  --color-border: #D2D9D0;
+  --color-border-subtle: #E2E7E0;
+  --color-border-hover: #B5BFB2;
+
+  /* Brand & Accents (Workshop Forest Green) */
+  --color-primary: #21663D;
+  --color-primary-hover: #195230;
+  --color-primary-contrast: #FFFFFF;
+  --color-primary-subtle: #E3EFE7;
+  --color-primary-border: #BCD9C5;
+
+  /* Secondary Accent (Technical Slate) */
+  --color-accent-blue: #2B577E;
+  --color-accent-blue-subtle: #E3ECF4;
+
+  /* Interactive States */
+  --color-focus: #21663D;
+  --color-focus-ring: rgba(33, 102, 61, 0.25);
+
+  /* Shadows (Subtle, structural, not floating clouds) */
+  --shadow-sm: 0 1px 2px rgba(19, 24, 20, 0.05);
+  --shadow-md: 0 3px 8px -1px rgba(19, 24, 20, 0.08), 0 1px 2px rgba(19, 24, 20, 0.04);
+  --shadow-lg: 0 8px 18px -3px rgba(19, 24, 20, 0.12), 0 2px 4px rgba(19, 24, 20, 0.04);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    /* Canvas & Surfaces */
+    --color-bg: #0C100D;
+    --color-surface: #141A15;
+    --color-surface-secondary: #1B221C;
+    --color-surface-tertiary: #232C24;
+    --color-surface-hover: #182019;
+
+    /* Typography Colors */
+    --color-ink: #EAF0E8;
+    --color-ink-secondary: #A8B5A6;
+    --color-ink-muted: #7A8778;
+    --color-ink-subtle: #556054;
+
+    /* Structural Borders & Rules */
+    --color-border: #232C24;
+    --color-border-subtle: #1C231D;
+    --color-border-hover: #333F34;
+
+    /* Brand & Accents */
+    --color-primary: #52B877;
+    --color-primary-hover: #67C78A;
+    --color-primary-contrast: #0A120D;
+    --color-primary-subtle: #162B1D;
+    --color-primary-border: #23472F;
+
+    /* Secondary Accent */
+    --color-accent-blue: #6FA2D1;
+    --color-accent-blue-subtle: #152535;
+
+    /* Interactive States */
+    --color-focus: #52B877;
+    --color-focus-ring: rgba(82, 184, 119, 0.3);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.6);
+  }
+}
+
+[data-theme="dark"] {
+  --color-bg: #0C100D;
+  --color-surface: #141A15;
+  --color-surface-secondary: #1B221C;
+  --color-surface-tertiary: #232C24;
+  --color-surface-hover: #182019;
+
+  --color-ink: #EAF0E8;
+  --color-ink-secondary: #A8B5A6;
+  --color-ink-muted: #7A8778;
+  --color-ink-subtle: #556054;
+
+  --color-border: #232C24;
+  --color-border-subtle: #1C231D;
+  --color-border-hover: #333F34;
+
+  --color-primary: #52B877;
+  --color-primary-hover: #67C78A;
+  --color-primary-contrast: #0A120D;
+  --color-primary-subtle: #162B1D;
+  --color-primary-border: #23472F;
+
+  --color-accent-blue: #6FA2D1;
+  --color-accent-blue-subtle: #152535;
+
+  --color-focus: #52B877;
+  --color-focus-ring: rgba(82, 184, 119, 0.3);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.6);
+}

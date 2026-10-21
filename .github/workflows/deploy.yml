@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'docs/**'
+      - 'styles/**'
       - '.github/scripts/**'
       - '.github/workflows/**'
       - 'README.md'
@@ -60,6 +61,7 @@ jobs:
           cp -r docs/*.html _site/docs/
           # Also copy directly to root of site for convenient short URLs
           cp -r docs/*.html _site/
+          cp -r styles _site/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

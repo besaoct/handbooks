@@ -67,21 +67,33 @@ handbooks/
 │   │   └── update_readme.py
 │   └── workflows/
 │       └── deploy.yml
+├── docs/
+│   ├── db-sql.html
+│   ├── devops-and-git.html
+│   ├── express-mongo.html
+│   ├── flutter.html
+│   ├── go.html
+│   ├── javascript.html
+│   ├── python.html
+│   ├── react-nextjs.html
+│   ├── system-design.html
+├── styles/
+│   ├── components/
+│   │   ├── buttons.css
+│   │   ├── cards.css
+│   │   ├── footer.css
+│   │   ├── header.css
+│   │   ├── search.css
+│   ├── global.css
+│   ├── main.css
+│   ├── theme.css
+│   ├── tokens.css
+│   ├── typography.css
 ├── .gitignore
 ├── CODE_OF_CONDUCT.md
 ├── LICENSE
 ├── README.md
-├── index.html
-└── docs/
-    ├── db-sql.html
-    ├── devops-and-git.html
-    ├── express-mongo.html
-    ├── flutter.html
-    ├── go.html
-    ├── javascript.html
-    ├── python.html
-    ├── react-nextjs.html
-    └── system-design.html
+└── index.html
 ```
 <!-- REPO_STRUCTURE_END -->
 
