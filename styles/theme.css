@@ -69,9 +69,9 @@
     --color-ink-muted: #80907F;
     --color-ink-subtle: #5B6A5A;
 
-    /* Structural Borders & Rules (Soft, almost transparent) */
-    --color-border: rgba(255, 255, 255, 0.08);
-    --color-border-subtle: rgba(255, 255, 255, 0.04);
+    /* Structural Borders & Rules (Transparent in Dark Mode) */
+    --color-border: transparent;
+    --color-border-subtle: transparent;
     --color-border-hover: transparent;
 
     /* Brand & Accents */
@@ -115,9 +115,9 @@
   --color-ink-muted: #80907F;
   --color-ink-subtle: #5B6A5A;
 
-  /* Structural Borders & Rules */
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-subtle: rgba(255, 255, 255, 0.04);
+  /* Structural Borders & Rules (Transparent in Dark Mode) */
+  --color-border: transparent;
+  --color-border-subtle: transparent;
   --color-border-hover: transparent;
 
   --color-primary: #52B877;

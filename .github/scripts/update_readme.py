@@ -277,7 +277,6 @@ def generate_index_html(handbooks):
         cards_html.append(f"""        <article class="handbook-card" data-category="{html.escape(h['category'])}" data-search="{html.escape(search_data)}">
           <div class="card-top">
             <span class="card-badge">{html.escape(h['badge'])}</span>
-            <span class="card-filename">{html.escape(h['filename'])}</span>
           </div>
           <h2 class="card-title">{html.escape(h['title'])}</h2>
           {subtitle_block}
@@ -305,7 +304,7 @@ def generate_index_html(handbooks):
   <meta name="description" content="In-depth, interactive engineering handbooks covering Go, Python, JavaScript, React/Next.js, Flutter, DevOps, SQL, Express/MongoDB, and System Design." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="styles/main.css?v=7" />
+  <link rel="stylesheet" href="styles/main.css?v=8" />
 </head>
 <body>
   <!-- Global Navigation Header -->
